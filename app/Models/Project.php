@@ -28,5 +28,11 @@ class Project extends Model
     public function type(){
         return $this->belongsTo(Type::class); //collego il modello project con il modello type
     }
+
+    // definisco la relazione many-to-many nel model 
+    // qui c'è come a strutturato nella documentazione https://laravel.com/docs/10.x/eloquent-relationships#many-to-many-model-structure
+    public function technology(){
+       return $this->belongsToMany(Technology::class);
+    }
     
 }
