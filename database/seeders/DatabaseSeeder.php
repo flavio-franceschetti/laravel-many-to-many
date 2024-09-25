@@ -20,6 +20,6 @@ class DatabaseSeeder extends Seeder
         // ]);
         
         //richiamado il seeder qui possiamo rilanciarlo semplicemente con il comando php artisan db:seed senza dover inserire il nome 
-        $this->call([TypesTableSeeder::class,TechnologiesSeeder::class, ProjectsTableSeeder::class]);
+        $this->call([TypesTableSeeder::class,TechnologiesSeeder::class, ProjectsTableSeeder::class, ProjectTechnologySeeder::class]);
     }
 }
