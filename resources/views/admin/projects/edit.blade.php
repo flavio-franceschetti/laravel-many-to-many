@@ -32,6 +32,15 @@
             @enderror
         </div>
 
+        <label for="type">Tipo:</label>
+        <select name="type_id" id="type" class="form-select my-3" aria-label="Default select example">
+            <option value="" selected>Seleziona il tipo...</option>
+            @foreach ($types as $type)
+                <option value="{{ $type->id }}" @if (old('type_id', $project->type_id) == $type->id) selected @endif>{{ $type->name }}
+                </option>
+            @endforeach
+        </select>
+
         <div class="form-check">
             <input class="form-check-input" type="radio" name="status" value="0" id="flexRadioDefault1">
             <label class="form-check-label" for="flexRadioDefault1">
