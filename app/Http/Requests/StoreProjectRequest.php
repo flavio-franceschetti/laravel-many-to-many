@@ -28,6 +28,9 @@ class StoreProjectRequest extends FormRequest
             'description' => 'required|string|min:10',
             'status' => 'required',
             'github' => 'string|max:255',
+            // controllo che l'id presente nella tabella project esista realmente nella rabella types
+            'type_id' => 'exists:types,id',
+            'technologies' => 'exists:technologies,id',
         ];
 
     }

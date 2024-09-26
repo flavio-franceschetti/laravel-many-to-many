@@ -6,6 +6,7 @@ use App\functions\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,8 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::orderBy('id', 'desc')->get();
-        $projectCount= Project::count('id');
+        $projectCount = Project::count('id');
+        
 
         return view('admin.projects.index', compact('projects','projectCount'));
     }
@@ -30,8 +32,9 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
-        return view('admin.projects.create', compact('types'));
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -39,16 +42,21 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
+
         // prendo tutti i dati che ricevo dal form
-       $data = $request->all();
+        $data = $request->all();
+
        //creo un nuovo progetto
        $newProject = new Project();
        // genero lo slug con il titolo che è stato mandato nel form
        $data['slug'] = Helper::generateSlug($data['name'], Project::class);
+
+       
        // fillo il nuovo progetto con tutti i dati ricevuti e laravel assegnerà automaticamente i valori provenienti dall'array $data agli attributi del modello che sono presenti in $fillable
-        $newProject->fill($data);
-        // salvo il nuovo progetto
-        $newProject->save();
+       $newProject->fill($data);
+       // salvo il nuovo progetto
+       $newProject->save();
+       $newProject->technologies()->attach($data['technologies']);
         // reindirizzo alla pagina index dove c'è l'elenco di tutti i progetti
         return redirect()->route('admin.projects.show', $newProject->id);
     }
@@ -68,8 +76,10 @@ class ProjectController extends Controller
     {
 
         $types = Type::all();
+        $technologies = Technology::all();
 
-        return view('admin.projects.edit', compact('project', 'types'));
+
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -86,6 +96,7 @@ class ProjectController extends Controller
         }
 
         $project->update($data);
+        $project->technologies()->sync($data['technologies']);
         return redirect()->route('admin.projects.show', $project->id);
 
     }

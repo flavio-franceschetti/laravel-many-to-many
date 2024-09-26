@@ -16,7 +16,7 @@ class Technology extends Model
 
     // definisco la relazione many-to-many nel model 
     // qui c'è come a strutturato nella documentazione https://laravel.com/docs/10.x/eloquent-relationships#many-to-many-model-structure
-    public function project(){
+    public function projects(){
        return $this->belongsToMany(Project::class);
     }
     

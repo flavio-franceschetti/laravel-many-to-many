@@ -10,6 +10,7 @@
                 <th scope="col">Data di creazione</th>
                 <th scope="col">Status</th>
                 <th scope="col">Type</th>
+                <th scope="col">Tecnologie</th>
                 <th scope="col">Azioni</th>
             </tr>
             </thead>
@@ -23,6 +24,13 @@
                         <td>
                             {{-- stampo in pagina il tipo --}}
                             {{ $project->type ? $project->type->name : 'nessuna categoria' }}
+                        </td>
+                        <td>
+
+                            @foreach ($project->technologies as $technology)
+                                <span class="badge text-bg-info"> {{ $technology->name }}</span>
+                            @endforeach
+
                         </td>
                         <td class="d-flex gap-2">
                             <a class="btn btn-primary" href="{{ route('admin.projects.show', $project) }}"><i

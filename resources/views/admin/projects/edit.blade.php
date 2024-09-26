@@ -32,14 +32,31 @@
             @enderror
         </div>
 
-        <label for="type">Tipo:</label>
-        <select name="type_id" id="type" class="form-select my-3" aria-label="Default select example">
-            <option value="" selected>Seleziona il tipo...</option>
-            @foreach ($types as $type)
-                <option value="{{ $type->id }}" @if (old('type_id', $project->type_id) == $type->id) selected @endif>{{ $type->name }}
-                </option>
+        <div class="mb-2">Seleziona le tecnologie usate:</div>
+        <div class="mb-3 btn-group" role="group" aria-label="Basic checkbox toggle button group">
+            @foreach ($technologies as $technology)
+                <input 
+                {{-- @checked($project->technologies->contains($technology))  --}} 
+                {{-- @checked(in_array($technology->id, $project->technologies()->pluck('id')->toArray())) --}}
+                @checked(in_array($technology->id, old('technologies', $project->technologies->pluck('id')->toArray()))) 
+                name="technologies[]"
+                    value="{{ $technology->id }}" type="checkbox" class="btn-check" id="tech-{{ $technology->id }}"
+                    autocomplete="off">
+                <label class="btn btn-outline-primary" for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
             @endforeach
-        </select>
+        </div>
+        <div>
+
+            <label for="type">Tipo:</label>
+            <select name="type_id" id="type" class="form-select my-3" aria-label="Default select example">
+                <option value="" selected>Seleziona il tipo...</option>
+                @foreach ($types as $type)
+                    <option value="{{ $type->id }}" {{-- @if (old('type_id', $project->type_id) == $type->id) selected @endif --}} @selected(old('type_id', $project->type_id) == $type->id)>
+                        {{ $type->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
         <div class="form-check">
             <input class="form-check-input" type="radio" name="status" value="0" id="flexRadioDefault1">
