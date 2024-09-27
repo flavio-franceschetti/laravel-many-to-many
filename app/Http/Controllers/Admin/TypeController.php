@@ -33,10 +33,12 @@ class TypeController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $data['slug'] = Helper::generateSlug($data['name'], Type::class);
-        $newType = Type::create($data);
-        return redirect()->route('admin.types.index');
 
+        $data['slug'] = Helper::generateSlug($data['name'], Type::class);
+
+        $newType = Type::create($data);
+
+        return redirect()->route('admin.types.index');
     }
 
     /**

@@ -56,7 +56,13 @@ class ProjectController extends Controller
        $newProject->fill($data);
        // salvo il nuovo progetto
        $newProject->save();
-       $newProject->technologies()->attach($data['technologies']);
+
+       // creo una condizione dove solo se esiste technologies in data allora fai l' attach altrimenti non fai nulla. In questo modo posso creare progetti anche senza inserire le tecnologie usate
+       if(array_key_exists('technologies', $data)){
+           $newProject->technologies()->attach($data['technologies']);
+       } 
+
+       
         // reindirizzo alla pagina index dove c'è l'elenco di tutti i progetti
         return redirect()->route('admin.projects.show', $newProject->id)->with('success', 'Il progetto è stato creato con successo!');
     }
@@ -96,7 +102,13 @@ class ProjectController extends Controller
         }
 
         $project->update($data);
-        $project->technologies()->sync($data['technologies']);
+        // aggiungo una condizione per dove se durante la modifica rimuovo tutte le tecnologie non viene visualizzato errore ma toglie tutte le tecnologie con il detach()
+        if(array_key_exists('technologies', $data)){
+            $project->technologies()->sync($data['technologies']);
+        } else{
+            $project->technologies()->detach();
+        }
+
         return redirect()->route('admin.projects.show', $project->id)->with('success', 'Il progetto è stato modificato con successo!');
 
     }

@@ -1,11 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-@if ($message = Session::get('success'))
+    {{-- @if ($message = Session::get('success'))
 <div class="alert alert-success" role="alert">
     {{$message}}
   </div>
-@endif
+@endif --}}
+    @if ($message = Session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ $message }}
+        </div>
+    @endif
     <h3>Lista {{ $projectCount }} progetti </h3>
     <table class="table">
         <tdead>
@@ -31,10 +36,13 @@
                             {{ $project->type ? $project->type->name : 'nessuna categoria' }}
                         </td>
                         <td>
-
-                            @foreach ($project->technologies as $technology)
-                                <span class="badge text-bg-info"> {{ $technology->name }}</span>
-                            @endforeach
+                            @if ($project->technologies->count() > 0)
+                                @foreach ($project->technologies as $technology)
+                                    <span class="badge text-bg-info"> {{ $technology->name }}</span>
+                                @endforeach
+                            @else
+                                <span>-</span>
+                            @endif
 
                         </td>
                         <td class="d-flex gap-2">
