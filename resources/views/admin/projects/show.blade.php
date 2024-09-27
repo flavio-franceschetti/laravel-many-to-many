@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+@if ($message = Session::get('success'))
+<div class="alert alert-success" role="alert">
+    {{$message}}
+  </div>
+@endif
     <div class="card">
         <div class="card-header">
             Dettagli

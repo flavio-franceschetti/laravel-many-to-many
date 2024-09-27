@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+@if ($message = Session::get('success'))
+<div class="alert alert-success" role="alert">
+    {{$message}}
+  </div>
+@endif
     <h3>Lista {{ $projectCount }} progetti </h3>
     <table class="table">
         <tdead>

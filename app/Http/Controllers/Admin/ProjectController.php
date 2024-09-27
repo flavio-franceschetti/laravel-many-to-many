@@ -58,7 +58,7 @@ class ProjectController extends Controller
        $newProject->save();
        $newProject->technologies()->attach($data['technologies']);
         // reindirizzo alla pagina index dove c'è l'elenco di tutti i progetti
-        return redirect()->route('admin.projects.show', $newProject->id);
+        return redirect()->route('admin.projects.show', $newProject->id)->with('success', 'Il progetto è stato creato con successo!');
     }
 
     /**
@@ -97,7 +97,7 @@ class ProjectController extends Controller
 
         $project->update($data);
         $project->technologies()->sync($data['technologies']);
-        return redirect()->route('admin.projects.show', $project->id);
+        return redirect()->route('admin.projects.show', $project->id)->with('success', 'Il progetto è stato modificato con successo!');
 
     }
 
@@ -107,6 +107,6 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
-        return redirect()->route('admin.projects.index');
+        return redirect()->route('admin.projects.index')->with('success', 'Il proggetto è stato eliminato con successo!');
     }
 }
