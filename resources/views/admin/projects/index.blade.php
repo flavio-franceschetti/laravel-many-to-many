@@ -16,6 +16,7 @@
         <tdead>
             <tr>
                 <th scope="col">ID</th>
+                <th scope="col">Thumb</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Data di creazione</th>
                 <th scope="col">Status</th>
@@ -28,6 +29,10 @@
                 @foreach ($projects as $project)
                     <tr>
                         <td>{{ $project->id }}</td>
+                        <td>
+                            <img class="thumb-img" src="{{ asset('storage/' . $project->image_path) }}"
+                                alt="{{ $project->img_original_name }}">
+                        </td>
                         <td>{{ $project->name }}</td>
                         <td>{{ $project->created_at->format('d-m-Y') }}</td>
                         <td>{{ $project->status ? 'Done' : 'In progress' }}</td>

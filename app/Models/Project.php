@@ -16,7 +16,9 @@ class Project extends Model
         'description',
         'status',
         'github',
-        'slug'
+        'slug',
+        'image_path',
+        'img_original_name',
     ];
     
     //La proprietà $casts consente di definire come gli attributi devono essere automaticamente convertiti quando vengono letti o salvati nel database e viene salvata automaticamente quando si usa fill() nel controller

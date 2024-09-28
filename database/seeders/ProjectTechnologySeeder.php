@@ -23,7 +23,7 @@ class ProjectTechnologySeeder extends Seeder
             //pluck('id') mi restituisce solo i valori del campo id degli elementi seleizionati
              // toArray() inserisce tutti gli id in un normale array php che viene accettato dal metodo attach
             $randomTechnologies = $technologies->random(rand(0, 3))->pluck('id')->toArray();
-            $project->technology()->attach($randomTechnologies);
+            $project->technologies()->attach($randomTechnologies);
         }
 
         // for($i = 0; $i < 50; $i++){

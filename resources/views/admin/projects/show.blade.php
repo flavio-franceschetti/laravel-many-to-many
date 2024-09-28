@@ -27,6 +27,8 @@
                     <span>-</span>
                 @endif
             </p>
+            <div class="my-3"><img class="img-fluid" src="{{ asset('storage/' . $project->image_path) }}"
+                    alt="{{ $project->img_original_name }}"></div>
             <a class="btn btn-primary" href="{{ route('admin.projects.index') }}"><i
                     class="fa-solid fa-arrow-rotate-left"></i></a>
             {{-- <a class="btn btn-primary" href="#"><i class="fa-solid fa-eye"></i></a> --}}

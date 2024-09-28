@@ -9,8 +9,7 @@ use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -45,13 +44,22 @@ class ProjectController extends Controller
 
         // prendo tutti i dati che ricevo dal form
         $data = $request->all();
-
        //creo un nuovo progetto
        $newProject = new Project();
+       // controllo sull'immagine che deve essere caricata se esiste nelli dati inviati quindi se è in data allora fai tutte le altre azioni
+        if(array_key_exists('image_path', $data)){
+            // salvo la chiave nello storage
+            $image_path = Storage::put('uploads', $data['image_path']);
+            // recupero il nome originale dell'immagine
+            $original_name = $request->file('image_path')->getClientOriginalName();
+            // aggiungo i valori a data 
+            $data['image_path'] = $image_path; 
+            $data['img_original_name'] = $original_name; 
+        }
+
        // genero lo slug con il titolo che è stato mandato nel form
        $data['slug'] = Helper::generateSlug($data['name'], Project::class);
 
-       
        // fillo il nuovo progetto con tutti i dati ricevuti e laravel assegnerà automaticamente i valori provenienti dall'array $data agli attributi del modello che sono presenti in $fillable
        $newProject->fill($data);
        // salvo il nuovo progetto
@@ -61,7 +69,6 @@ class ProjectController extends Controller
        if(array_key_exists('technologies', $data)){
            $newProject->technologies()->attach($data['technologies']);
        } 
-
        
         // reindirizzo alla pagina index dove c'è l'elenco di tutti i progetti
         return redirect()->route('admin.projects.show', $newProject->id)->with('success', 'Il progetto è stato creato con successo!');

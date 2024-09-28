@@ -18,6 +18,8 @@ return new class extends Migration
             $table->boolean('status');
             $table->string('github', 255)->nullable();
             $table->string('slug', 100);
+            $table->string('image_path')->nullable();
+            $table->string('img_original_name')->nullable();
             $table->timestamps();
         });
     }
