@@ -24,6 +24,7 @@
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
+
         <div class="mb-3">
             <label for="github" class="form-label">Github</label>
             <input type="text" class="form-control" id="github" name="github" value="{{ $project->github }}">

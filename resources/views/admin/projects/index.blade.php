@@ -31,7 +31,7 @@
                         <td>{{ $project->id }}</td>
                         <td>
                             <img class="thumb-img"
-                                src="{{ $project->image_path ? asset('storage/' . $project->image_path) : asset('storage/placehold image.jpeg') }}"
+                                src="{{ $project->image_path ? asset('storage/' . $project->image_path) : '/img/placehold image.jpeg' }}"
                                 alt="{{ $project->img_original_name }}">
                         </td>
                         <td>{{ $project->name }}</td>
@@ -51,7 +51,7 @@
                             @endif
 
                         </td>
-                        <td class="d-flex gap-2">
+                        <td class="d-flex align-items-center gap-2">
                             <a class="btn btn-primary" href="{{ route('admin.projects.show', $project) }}"><i
                                     class="fa-solid fa-eye"></i></a>
                             <a class="btn btn-warning" href="{{ route('admin.projects.edit', $project) }}"><i
@@ -67,4 +67,7 @@
                 @endforeach
             </tbody>
     </table>
+    <div class="my-5">
+        {{ $projects->links() }}
+    </div>
 @endsection

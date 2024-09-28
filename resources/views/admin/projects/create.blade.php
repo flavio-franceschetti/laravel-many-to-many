@@ -39,9 +39,11 @@
                 @endforeach
             </div>
 
+            {{-- thumb input --}}
             <div class="mb-3">
                 <label for="thumb" class="form-label">Inserisci una thumb per il proggetto</label>
-                <input name="image_path" class="form-control" type="file" id="thumb">
+                <input onchange="showThumb(event)" name="image_path" class="form-control" type="file" id="thumb">
+                <img class="my-3" id="thumb-img" src="/img/placehold image.jpeg" alt="thumb">
             </div>
 
             <div>
@@ -78,3 +80,13 @@
         </form>
     </div>
 @endsection
+
+
+
+<script>
+    function showThumb(event) {
+        const thumb = document.getElementById('thumb-img');
+        thumb.src = URL.createObjectURL(event.target.files[0])
+
+    }
+</script>

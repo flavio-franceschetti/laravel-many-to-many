@@ -18,7 +18,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::orderBy('id', 'desc')->get();
+        $projects = Project::orderBy('id', 'desc')->paginate(10);
         $projectCount = Project::count('id');
         
 
@@ -92,7 +92,7 @@ class ProjectController extends Controller
         $technologies = Technology::all();
 
 
-        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
+        return view('admin.projects.edit', compact('types', 'technologies'));
     }
 
     /**
@@ -118,7 +118,7 @@ class ProjectController extends Controller
             $data['image_path'] = $image_path; 
             $data['img_original_name'] = $original_name; 
         }
-        
+
         $project->update($data);
         // aggiungo una condizione per dove se durante la modifica rimuovo tutte le tecnologie non viene visualizzato errore ma toglie tutte le tecnologie con il detach()
         if(array_key_exists('technologies', $data)){
