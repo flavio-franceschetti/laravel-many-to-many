@@ -30,7 +30,8 @@
                     <tr>
                         <td>{{ $project->id }}</td>
                         <td>
-                            <img class="thumb-img" src="{{ asset('storage/' . $project->image_path) }}"
+                            <img class="thumb-img"
+                                src="{{ $project->image_path ? asset('storage/' . $project->image_path) : asset('storage/placehold image.jpeg') }}"
                                 alt="{{ $project->img_original_name }}">
                         </td>
                         <td>{{ $project->name }}</td>

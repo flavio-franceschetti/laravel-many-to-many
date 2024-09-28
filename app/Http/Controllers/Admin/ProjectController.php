@@ -108,6 +108,17 @@ class ProjectController extends Controller
             $data['slug'] = Helper::generateSlug($data['name'], Project::class);
         }
 
+        // controllo sull'immagine che deve essere caricata se esiste nelli dati inviati quindi se è in data allora fai tutte le altre azioni
+        if(array_key_exists('image_path', $data)){
+            // salvo la chiave nello storage
+            $image_path = Storage::put('uploads', $data['image_path']);
+            // recupero il nome originale dell'immagine
+            $original_name = $request->file('image_path')->getClientOriginalName();
+            // aggiungo i valori a data 
+            $data['image_path'] = $image_path; 
+            $data['img_original_name'] = $original_name; 
+        }
+        
         $project->update($data);
         // aggiungo una condizione per dove se durante la modifica rimuovo tutte le tecnologie non viene visualizzato errore ma toglie tutte le tecnologie con il detach()
         if(array_key_exists('technologies', $data)){
