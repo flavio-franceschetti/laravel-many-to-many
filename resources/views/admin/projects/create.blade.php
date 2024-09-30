@@ -13,6 +13,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="description" class="form-label">Descrizione</label>
                 <input type="text" class="form-control" id="description" name="description"
@@ -42,6 +43,7 @@
             {{-- thumb input --}}
             <div class="mb-3">
                 <label for="thumb" class="form-label">Inserisci una thumb per il proggetto</label>
+                {{-- onchange richiamo la funzione showThumb(event) --}}
                 <input onchange="showThumb(event)" name="image_path" class="form-control" type="file" id="thumb">
                 <img class="my-3" id="thumb-img" src="/img/placehold image.jpeg" alt="thumb">
             </div>
@@ -61,13 +63,13 @@
                 @enderror
             </div>
 
-
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="status" value="0" id="flexRadioDefault1">
                 <label class="form-check-label" for="flexRadioDefault1">
                     In progress
                 </label>
             </div>
+
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="status" value="1" id="flexRadioDefault2" checked>
                 <label class="form-check-label" for="flexRadioDefault2">
@@ -82,10 +84,14 @@
 @endsection
 
 
-
 <script>
+    // funzione javascript per mostrare l'anteprima della thumb caricata gli passo come argomanto l'evento change del form
     function showThumb(event) {
+        // seleziono tramite l'id l'anteprima dell'immagine che deve essere cambiata
         const thumb = document.getElementById('thumb-img');
+        // imposto l'src dell'immagine 
+        //con event.target.files[0] accedon al primo e in questo caso unico file selezionato dall'utente nell elemento input
+        // URL.createObjectURL con questa funzione creo un URL temporaneo che punta al file selezionato
         thumb.src = URL.createObjectURL(event.target.files[0])
 
     }

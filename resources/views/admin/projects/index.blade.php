@@ -12,6 +12,10 @@
         </div>
     @endif
     <h3>Lista {{ $projectCount }} progetti </h3>
+    <form action="{{ route('admin.projects.index') }}" method="GET">
+        <input type="text" name="search" id="search" placeholder="Ricerca il progetto">
+        <button type="submit" class="btn btn-success">Cerca</button>
+    </form>
     <table class="table">
         <tdead>
             <tr>

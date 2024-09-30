@@ -31,6 +31,7 @@ class StoreProjectRequest extends FormRequest
             // controllo che l'id presente nella tabella project esista realmente nella rabella types
             'type_id' => 'exists:types,id|nullable',
             'technologies' => 'exists:technologies,id',
+            'image_path' => 'image|max:5120|mimes:png,jpg'
         ];
 
     }

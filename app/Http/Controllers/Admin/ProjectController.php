@@ -16,11 +16,15 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::orderBy('id', 'desc')->paginate(10);
         $projectCount = Project::count('id');
+
+        $projects = Project::orderBy('id', 'desc')->paginate(10);
         
+        if($request->search){
+            $projects = Project::where('name', 'LIKE', "%{$request->search}%")->orderBy('id')->paginate(10);
+        }
 
         return view('admin.projects.index', compact('projects','projectCount'));
     }
@@ -32,6 +36,7 @@ class ProjectController extends Controller
     {
         $types = Type::all();
         $technologies = Technology::all();
+    
 
         return view('admin.projects.create', compact('types', 'technologies'));
     }
@@ -92,7 +97,7 @@ class ProjectController extends Controller
         $technologies = Technology::all();
 
 
-        return view('admin.projects.edit', compact('types', 'technologies'));
+        return view('admin.projects.edit', compact('types', 'technologies', 'project'));
     }
 
     /**
